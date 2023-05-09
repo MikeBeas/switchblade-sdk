@@ -1,0 +1,6 @@
+src/
+tests/
+.babelrc
+!dist/
+.eslintrc.json
+scripts/
