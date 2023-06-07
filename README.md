@@ -4,21 +4,12 @@ The Switchblade SDK provides an easy way to interface with [Switchblade](https:/
 # Installation and Requirements
 This package relies on `fetch`, so it requires Node v18 or higher.
 
-Install the SDK from GitHub Packages:
+Install the SDK:
 
-Add this line to your project's `.npmrc` to set the `@mikebeas` namespace to use GitHub's package repository:
-
-```
-@mikebeas:registry=https://npm.pkg.github.com/
-```
-
-Then install with:
 
 ```
-npm install @mikebeas/switchblade-sdk
+npm install switchblade-sdk
 ```
-
-Other package managers will require different steps to point the `@mikebeas` namespace to GitHub packages. Consult your package manager's documentation if needed.
 
 # Usage
 To use the SDK, instantiate the `SwitchbladeSDK` class with the hostname for your Switchblade server.
