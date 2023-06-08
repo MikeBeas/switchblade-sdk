@@ -21,7 +21,7 @@ To get started, import and instantiate the `SwitchbladeSDK` class with a hostnam
 ```js
 // lib/switchblade.js
 import env from 'react-dotenv';
-import { SwitchbladeSDK } from '@mikebeas/switchblade-sdk';
+import { SwitchbladeSDK } from 'switchblade-sdk';
 
 const hostname = env.SWITCHBLADE_API_HOST;
 
@@ -40,7 +40,7 @@ switchblade.setHost("https://my.new.hostname.example.com");
 You can also use the Switchblade SDK in Node projects:
 
 ```js
-const { SwitchbladeSDK } = require('@mikebeas/switchblade-sdk');
+const { SwitchbladeSDK } = require('switchblade-sdk');
 ```
 
 ## Authentication
@@ -52,7 +52,7 @@ In this example, we'll setup a `SwitchbladeSDK` instance for a React application
 ```js
 // lib/switchblade.js
 import env from 'react-dotenv';
-import { SwitchbladeSDK } from '@mikebeas/switchblade-sdk';
+import { SwitchbladeSDK } from 'switchblade-sdk';
 
 export const switchblade = new SwitchbladeSDK({
   hostname: env.SWITCHBLADE_API_HOST,
@@ -91,7 +91,7 @@ You should also provide the SDK with a callback function to be executed if an AP
 
 ```js
 import env from 'react-dotenv';
-import { SwitchbladeSDK } from '@mikebeas/switchblade-sdk';
+import { SwitchbladeSDK } from 'switchblade-sdk';
 import { useDispatch } from 'react-redux';
 import { showTimeoutMessage } from './actions';
 
@@ -219,7 +219,7 @@ switchblade.me.modify(body: UserParams) // PATCH /me
 The package also exports an `sdk` object with basic metadata about itself. The `version` property in particular can be useful for troubleshooting. These details are read from the SDK's `package.json` at build time and will always reflect the actual details of the installed package.
 
 ```js
-import { sdk } from '@mikebeas/switchblade-sdk`;
+import { sdk } from 'switchblade-sdk`;
 
 console.log(`The current version of the Switchblade SDK is ${sdk.version}`);
 // The current version of the Switchblade SDK is 1.0.0
