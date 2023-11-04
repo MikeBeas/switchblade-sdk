@@ -1,4 +1,4 @@
-import { Method, UserParams } from '../types';
+import { Method, MeParams } from '../types';
 import NetworkInterface from '../util/network';
 
 class Me {
@@ -47,7 +47,7 @@ class Me {
     )
   }
 
-  async modify(body: UserParams) {
+  async modify(body: MeParams) {
     return await this.#network.run(
       "me",
       {

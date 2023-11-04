@@ -1,6 +1,9 @@
 # Switchblade SDK
 The Switchblade SDK provides an easy way to interface with [Switchblade](https://github.com/Mikebeas/switchblade) servers.
 
+# Latest Changes
+You can see what's new in each version of the Switchblade SDK in [the change log document](https://github.com/MikeBeas/switchblade-sdk/blob/master/changelog.md).
+
 # Installation and Requirements
 This package relies on `fetch`, so it requires Node v18 or higher.
 
@@ -156,6 +159,40 @@ if (switchblade.hasHost()) {
 
 If an endpoint requires authentication, it will return an error in the response body (identical to the response you'd get if calling the API directly) if called without a token. Endpoints that support unauthenticated calls will continue to work as expected for an unauthenticated user (i.e., certain data and options may not be available, such as getting shortcut drafts).
 
+# Handling Errors
+
+The Switchblade SDK has two methods of handling errors. The default behavior is to simply pass the output from the API call to your application and let you decide what to do with it. You can usually apply endpoint-specific logic (such as looking for a `message` in the response) to detect errors.
+
+Alternatively, you can specify that you want the SDK to throw when it encounters an error in the API response. This will throw a standard `Error` with a `message` containing the error message from the API. You can configure this behavior in the SDK constructor using the `throwOnError` property, or later using the `setThrowOnError` method.
+
+In the example below, you'll see both options for setting the error handling behavior demonstrated.
+
+```js
+import env from 'react-dotenv';
+import { SwitchbladeSDK } from 'switchblade-sdk';
+import { useDispatch } from 'react-redux';
+import { showTimeoutMessage } from './actions';
+
+// setup environment details
+const hostname = env.SWITCHBLADE_API_HOST;
+
+const App = () => {
+  const dispatch = useDispatch();
+
+  // instantiate switchblade-sdk
+  export const switchblade = new SwitchbladeSDK({
+    hostname,
+    token: localStorage.getItem("token"),
+    throwOnError: true // option 1
+  });
+
+  switchblade.setThrowOnError(true); // option 2
+
+  return <div />
+}
+```
+
+
 # Available Methods
 SDK methods are namespaced for clarity. All methods return the API response directly without any modification.
 
@@ -177,6 +214,17 @@ Note that there is no method for the `POST /hash-password` method.
 
 ```ts
 switchblade.setup.setup(body: UserParams) // POST /setup
+```
+
+## Users
+These methods are available in the `switchblade.users` namespace. They deal with listing and managing users.
+
+
+```ts
+switchblade.users.list(params: UsersSearchParams) // GET /users
+switchblade.users.get(userId: string | number) // GET /users/{userId}
+switchblade.users.create(body: UsersParams) // POST /users
+switchblade.users.modify(userId: string | number, body: UsersParams) // PATCH /users/{userId}
 ```
 
 ## Shortcuts
@@ -212,6 +260,14 @@ switchblade.me.beginMfaSetup() // POST /me/mfa/setup
 switchblade.me.completeMfaSetup(otp: string) // POST /me/mfa/complete
 switchblade.me.disableMfa() // DELETE /me/mfa
 switchblade.me.modify(body: UserParams) // PATCH /me
+```
+
+## Autocomplete
+These methods are available in the `switchblade.autocomplete` namespace. These endpoints are lightweight search endpoints that can be used to populate autocomplete fields.
+
+
+```ts
+switchblade.autocomplete.users(search: string) // GET /autocomplete/users
 ```
 
 # The `sdk` Object

@@ -6,7 +6,7 @@ const buildQueryString = (params: object = {}): string => {
     if (Array.isArray(value)) {
       const values = value.join(",")
       queryItems.push(`${key}=${values}`)
-    } else if (value !== "") {
+    } else if (![null, undefined, ""].includes(value)) {
       queryItems.push(`${key}=${value}`)
     }
   }
@@ -18,15 +18,21 @@ class NetworkInterface {
   #hostname?: string;
   #token?: string;
   #expiredTokenHandler?: () => void;
+  #throwOnError?: boolean;
 
-  constructor(hostname?: string, token?: string, expiredTokenHandler?: () => void) {
+  constructor(hostname?: string, token?: string, expiredTokenHandler?: () => void, throwOnError = false) {
     this.setHostname(hostname);
     if (!this.isTokenExpired(token)) this.setToken(token);
     this.setExpiredTokenHandler(expiredTokenHandler);
+    this.#throwOnError = throwOnError;
   }
 
   setExpiredTokenHandler(callback: () => void): void {
     this.#expiredTokenHandler = callback;
+  }
+
+  setThrowOnError(throwOnError?: boolean): void {
+    this.#throwOnError = throwOnError
   }
 
   setHostname(hostname?: string): void {
@@ -97,8 +103,14 @@ class NetworkInterface {
       init.body = JSON.stringify(body);
     }
 
-    return fetch(`${url}${queryString}`, init)
-      .then((r) => r.json())
+    const response = await fetch(`${url}${queryString}`, init);
+    const json = await response.json();
+
+    if (!response.ok && this.#throwOnError) {
+      throw new Error(json.message);
+    }
+
+    return json;
   }
 }
 

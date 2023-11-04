@@ -1,10 +1,12 @@
 import { SwitchbladeSDKParams } from './types';
+import NetworkInterface from './util/network';
 import Core from './services/core';
 import Shortcuts from './services/shortcuts';
 import Versions from './services/versions';
 import Me from './services/me';
 import Setup from './services/setup';
-import NetworkInterface from './util/network';
+import Users from './services/users';
+import AutoComplete from './services/autocomplete';
 
 class SwitchbladeSDK {
   #network: NetworkInterface;
@@ -14,9 +16,11 @@ class SwitchbladeSDK {
   versions: Versions;
   me: Me;
   setup: Setup;
+  users: Users;
+  autocomplete: AutoComplete;
 
   constructor(params?: SwitchbladeSDKParams) {
-    this.#network = new NetworkInterface(params?.hostname, params?.token, params?.expiredTokenHandler);
+    this.#network = new NetworkInterface(params?.hostname, params?.token, params?.expiredTokenHandler, params?.throwOnError);
     this.#updateNetworkHandlers();
   }
 
@@ -37,12 +41,19 @@ class SwitchbladeSDK {
     this.#updateNetworkHandlers();
   }
 
+  setThrowOnError(throwOnError: boolean): void {
+    this.#network.setThrowOnError(throwOnError);
+    this.#updateNetworkHandlers();
+  }
+
   #updateNetworkHandlers() {
     this.core = new Core(this.#network);
     this.shortcuts = new Shortcuts(this.#network);
     this.versions = new Versions(this.#network);
     this.me = new Me(this.#network);
     this.setup = new Setup(this.#network);
+    this.users = new Users(this.#network);
+    this.autocomplete = new AutoComplete(this.#network);
   }
 
   setHost(hostname: string): void {

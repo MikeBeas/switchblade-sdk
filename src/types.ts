@@ -1,3 +1,17 @@
+// Users
+export interface UserSearchParams {
+  deleted?: boolean
+  search?: string
+}
+
+export interface UserParams {
+  username?: string
+  password?: string
+  deleted?: boolean,
+  permissions?: object
+}
+
+
 // Shortcuts
 export type ShortcutState = 0 | "0" | 1 | "1"
 
@@ -7,11 +21,12 @@ export interface ShortcutSearchParams {
 }
 
 export interface ShortcutParams {
-  name: string
+  name?: string
   headline?: string
   description?: string
   state?: ShortcutState
-  deleted?: boolean
+  deleted?: boolean,
+  creatorId?: number | string
 }
 
 
@@ -34,12 +49,13 @@ export interface VersionParams {
   date?: string
   required?: boolean
   state?: VersionState
-  deleted?: boolean
+  deleted?: boolean,
+  authorId?: number | string
 }
 
 export interface VersionPatchParams {
   notes?: string
-  url: string
+  url?: string
   minimumiOS?: string | number
   minimumMac?: string | number
   date?: string
@@ -53,7 +69,8 @@ export interface VersionPatchParams {
 export interface SwitchbladeSDKParams {
   hostname?: string
   token?: string
-  expiredTokenHandler: () => void
+  expiredTokenHandler: () => void,
+  throwOnError?: boolean
 }
 
 export interface LoginParams {
@@ -63,7 +80,7 @@ export interface LoginParams {
   mfaToken?: string
 }
 
-export interface UserParams {
+export interface MeParams {
   username?: string
   password?: string
 }

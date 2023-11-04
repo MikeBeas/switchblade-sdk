@@ -6,8 +6,7 @@ const sdk = {
   version: self.version,
   description: self.description,
   author: self.author,
-  repository: self.repository,
-
+  repository: self.repository
 }
 
 export { SwitchbladeSDK, sdk };

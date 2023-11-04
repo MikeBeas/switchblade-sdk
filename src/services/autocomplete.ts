@@ -1,22 +1,22 @@
-import { Method, MeParams } from '../types';
+import { Method } from '../types';
 import NetworkInterface from '../util/network';
 
-class Setup {
+class AutoComplete {
   #network: NetworkInterface;
 
   constructor(network: NetworkInterface) {
     this.#network = network;
   }
 
-  async setup(body: MeParams) {
+  async users(search: string) {
     return await this.#network.run(
-      "setup",
+      "autocomplete/users",
       {
-        method: Method.Post,
-        body
+        method: Method.Get,
+        params: { search }
       }
     )
   }
 }
 
-export default Setup;
+export default AutoComplete;
