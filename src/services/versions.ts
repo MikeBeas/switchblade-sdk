@@ -1,4 +1,4 @@
-import { Method, ShortcutSearchParams, VersionParams, VersionPatchParams } from '../types';
+import { Method, VersionParams, VersionPatchParams, VersionSearchParams } from '../types';
 import NetworkInterface from '../util/network';
 
 class Versions {
@@ -8,7 +8,7 @@ class Versions {
     this.#network = network;
   }
 
-  async list(shortcutId: string | number, params?: ShortcutSearchParams) {
+  async list(shortcutId: string | number, params?: VersionSearchParams) {
     return await this.#network.run(
       `shortcuts/${shortcutId}/history`,
       {
@@ -18,17 +18,18 @@ class Versions {
     )
   }
 
-  async get(shortcutId: string | number, versionNumber: string) {
+  async get(shortcutId: string | number, versionNumber: string, params?: VersionSearchParams) {
     return await this.#network.run(
       `shortcuts/${shortcutId}/version/${versionNumber}`,
       {
-        method: Method.Get
+        method: Method.Get,
+        params
       }
     )
   }
 
-  async getLatest(shortcutId: string | number) {
-    return this.get(shortcutId, "latest")
+  async getLatest(shortcutId: string | number, params?: VersionSearchParams) {
+    return this.get(shortcutId, "latest", params)
   }
 
   async create(shortcutId: string | number, body: VersionParams) {

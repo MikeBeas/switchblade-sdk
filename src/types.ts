@@ -7,7 +7,7 @@ export interface UserSearchParams {
 export interface UserParams {
   username?: string
   password?: string
-  deleted?: boolean,
+  deleted?: boolean
   permissions?: object
 }
 
@@ -18,6 +18,8 @@ export type ShortcutState = 0 | "0" | 1 | "1"
 export interface ShortcutSearchParams {
   deleted?: boolean
   state?: ShortcutState | ShortcutState[]
+  search?: string
+  creatorId?: number | string
 }
 
 export interface ShortcutParams {
@@ -25,7 +27,7 @@ export interface ShortcutParams {
   headline?: string
   description?: string
   state?: ShortcutState
-  deleted?: boolean,
+  deleted?: boolean
   creatorId?: number | string
 }
 
@@ -38,6 +40,9 @@ export interface VersionSearchParams {
   deleted?: boolean
   state?: VersionState | VersionState[]
   required?: boolean
+  search?: string
+  creatorId?: number | string
+  sinceVersion?: string
 }
 
 export interface VersionParams {
@@ -49,8 +54,8 @@ export interface VersionParams {
   date?: string
   required?: boolean
   state?: VersionState
-  deleted?: boolean,
-  authorId?: number | string
+  deleted?: boolean
+  creatorId?: number | string
 }
 
 export interface VersionPatchParams {

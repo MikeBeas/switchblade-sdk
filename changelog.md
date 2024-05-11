@@ -1,3 +1,13 @@
+# v1.2.0 (2024-05-11)
+- Added `sinceVersion` parameter to several endpoints (all require Switchblade 1.3.0):
+  - `switchblade.versions.list`
+  - `switchblade.versions.getLatest`: This endpoint now accepts an optional `params` argument which is a `VersionSearchParams` object
+  - `switchblade.versions.get`: This endpoint now accepts an optional `params` argument which is a `VersionSearchParams` object
+- Fixed an issue where the `VersionParams` type had an `authorId` parameter instead of `creatorId`
+- Fixed an issue where the `switchblade.versions.list` endpoint accepted `ShortcutSearchParams` instead of `VersionSearchParams` (fixed issue in README as well)
+- Added missing params `search` and `creatorId` to `VersionSearchParams` and `ShortcutSearchParams`
+- Various dependency updates
+
 # v1.1.0 (2023-10-04)
 - Added `switchblade.users` namespace to support new endpoints available in Switchblade 1.2.0.
 - Added `switchblade.autocomplete` namespace to support new endpoints available in Switchblade 1.2.0.

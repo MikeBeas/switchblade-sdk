@@ -243,7 +243,7 @@ These methods are available in the `switchblade.versions` namespace. They deal w
 
 
 ```ts
-switchblade.versions.list(shortcutId: string | number, params: ShortcutSearchParams) // GET /shortcuts/{shortcutId}/history
+switchblade.versions.list(shortcutId: string | number, params: VersionSearchParams) // GET /shortcuts/{shortcutId}/history
 switchblade.versions.get(shortcutId: string | number, versionNumber: string) // GET /shortcuts/{shortcutId}/version/{versionNumber}
 switchblade.versions.getLatest(shortcutId: string | number) // GET /shortcuts/{shortcutId}/version/latest
 switchblade.versions.create(shortcutId: string | number, body: VersionParams) // POST /shortcuts/{shortcutId}/version
