@@ -110,15 +110,15 @@ const App = () => {
   }
 
   // instantiate switchblade-sdk
-  export const switchblade = new SwitchbladeSDK({
+  const switchblade = new SwitchbladeSDK({
     hostname,
     token: localStorage.getItem("token"),
-    expiredTokenHandler // option 1
+    expiredTokenHandler // option 1, not recommended to do inside your component, do this only if your handler doesn't require dispatch or anything like that
   });
 
-  switchblade.authenticate("user_token", logout);  // option 2
+  switchblade.authenticate("user_token", expiredTokenHandler);  // option 2
 
-  switchblade.setExpiredTokenHandler(logout); // option 3
+  switchblade.setExpiredTokenHandler(expiredTokenHandler); // option 3
 
   return <div />
 }
@@ -170,26 +170,18 @@ In the example below, you'll see both options for setting the error handling beh
 ```js
 import env from 'react-dotenv';
 import { SwitchbladeSDK } from 'switchblade-sdk';
-import { useDispatch } from 'react-redux';
-import { showTimeoutMessage } from './actions';
 
 // setup environment details
 const hostname = env.SWITCHBLADE_API_HOST;
 
-const App = () => {
-  const dispatch = useDispatch();
+// instantiate switchblade-sdk
+export const switchblade = new SwitchbladeSDK({
+  hostname,
+  token: localStorage.getItem("token"),
+  throwOnError: true // option 1
+});
 
-  // instantiate switchblade-sdk
-  export const switchblade = new SwitchbladeSDK({
-    hostname,
-    token: localStorage.getItem("token"),
-    throwOnError: true // option 1
-  });
-
-  switchblade.setThrowOnError(true); // option 2
-
-  return <div />
-}
+switchblade.setThrowOnError(true); // option 2
 ```
 
 
